@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import "./App.css";
 
 function App() {
   const [user, setUser] = useState([{ email: "", password: "" }]);
 
-  const[error,setError]=useState("")
-    const[success,setSuccess]=useState("")
+  
 
   function updateUser(e) {
     // console.log(e.target.name)
@@ -19,34 +17,28 @@ function App() {
 
 
 
-  async function implimentLogin(e){
+   function implimentLogin(e){
     e.preventDefault()
 
-    // if(!user.email || !user.password){
-    //     setError("All fields are required")
-    //     setSuccess("")
-    //     return;
-    // }
-    try{
-        let response=await axios.post("https://dummyjson.com/auth/login",{username:user.email,password:user.password},)
-        console.log(response.data)
-        console.log(response.data.email)
-        // localStorage.setItem("user",JSON.stringify(response.data))
-        localStorage.setItem("user",JSON.stringify(response.data))
-            setSuccess("Succesfullyloggedin")
-      
-
-    }
-    catch(e){
-        setError(e.message)
-    }
+    fetch('https://dummyjson.com/auth/login', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    
+    username: 'kminchelle',
+    password: '0lelplR',
+    // expiresInMins: 60, // optional
+  })
+})
+.then(res => res.json())
+.then(console.log);
    
 }
 
   return (
     <div className="App">
       <div className="style">
-      {error?<p>{error}</p>:<p>{success}</p>}
+    
         <form className="form" onSubmit={implimentLogin}>
           <p>Welcome back! 👋</p>
           <h2>Sign in to your account</h2>
